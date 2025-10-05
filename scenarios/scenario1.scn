@@ -10,5 +10,10 @@
             <particles enabled="true"/>
         </ocean>
     </environment>
+
+    <!-- Include the robot-->
+    <include file="bluerov2_robot.scn">
+        <arg name="robot_name" value="BlueROV2_ResiFarm"/>
+    </include>
     
 </scenario>

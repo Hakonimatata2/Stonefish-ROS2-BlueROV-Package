@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<scenario>
+
+    <!-- Looks-->
+    <looks>
+        <look name="blueRovTexture" gray="1.0" roughness="0.1" metalness="0.5" texture="BlueROV/BlueRov.png"/>
+        <look name=""/>
+    </looks>
+
+    <!--Material-->
+    <materials>
+        <material name="Dummy" density="1000.0" restitution="0.3"/>
+    </materials>
+
+
+    <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
+        <!-- robot definitions -->
+        <base_link name="vehicle" type="compound" physics="submerged">
+            <external_part name="vehicle" type="model" physics="submerged" buoyant="false">
+                <physical>
+                    <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                    <thickness value="0.005"/>
+                </physical>
+                <visual>
+                    <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </visual>
+                <material name="Dummy"/>
+            </external_part>
+        </base_link>
+
+
+
+    </robot>
+
+
+
+
+
+
+
+</scenario>
