@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<scenario>
+    <!-- Lag et tom hav-->
+     <environment>
+        <ned latitude="40.0" longitude="3.0"/> 
+        <!-- ocean definitions -->
+         <ocean>
+            <water density="1031.0" jerlov="0.2" temperature="15.0"/>
+            <waves height="0.0"/>
+            <particles enabled="true"/>
+        </ocean>
+    </environment>
+    
+</scenario>
