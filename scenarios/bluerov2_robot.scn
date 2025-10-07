@@ -4,21 +4,17 @@
     <!-- Looks-->
     <looks>
         <look name="blueRovTexture" gray="1.0" roughness="0.1" metalness="0.5" texture="BlueROV/BlueRov.png"/>
-        <look name=""/>
     </looks>
-
-    <!--Material-->
-    <materials>
-        <material name="Dummy" density="1000.0" restitution="0.3"/>
-    </materials>
 
 
     <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
         <!-- robot definitions -->
         <base_link name="vehicle" type="compound" physics="submerged">
+            
             <external_part name="vehicle" type="model" physics="submerged" buoyant="false">
                 <physical>
-                    <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+                    <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/>
+                    <!-- <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/> -->
                     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
                     <thickness value="0.005"/>
                 </physical>
@@ -27,10 +23,29 @@
                     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
                 </visual>
                 <material name="Dummy"/>
+                <look name="blueRovTexture"/>
+                <compound_transform rpy="0 0.0 0.0" xyz="0.0 0.0 0.0"/>
             </external_part>
+
+            <internal_part name="volume" type="box" physics="submerged" buoyant="true">
+				<dimensions xyz="0.244966 0.244966 0.244966"/>
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+				<material name="Dummy"/>
+				<look name="None"/>
+				<mass value="0.025"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+			</internal_part>
+            
         </base_link>
 
+        <mass value="14.7"/>
+        <inertia xyz="1.0 1.0 1.0"/>
+        <cg xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
 
+
+
+
+        <world_transform xyz="$(arg position)" rpy="$(arg orientation)"/>
 
     </robot>
 

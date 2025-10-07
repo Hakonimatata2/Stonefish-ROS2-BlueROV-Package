@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <scenario>
+
+    <!--Materials-->
+    <materials>
+        <material name="Dummy" density="1000.0" restitution="0.1"/>
+    </materials>
+
     <!-- Lag et tom hav-->
      <environment>
         <ned latitude="40.0" longitude="3.0"/> 
@@ -11,9 +17,15 @@
         </ocean>
     </environment>
 
-    <!-- Include the robot-->
-    <include file="bluerov2_robot.scn">
+
+    <!-- Include robot -->
+    <include file="/root/stonefish_ros2_ws/src/stonefish_bluerov2/scenarios/bluerov2_robot.scn">
         <arg name="robot_name" value="BlueROV2_ResiFarm"/>
+        <arg name="position" value="0.0 0.0 4.0"/>
+        <arg name="orientation" value="0.0 0.0 0.0"/>
     </include>
+
+
+
     
 </scenario>
