@@ -3,56 +3,70 @@
 
     <!-- Looks-->
     <looks>
-        <look name="blueRovTexture" gray="1.0" roughness="0.1" metalness="0.5" texture="BlueROV/BlueRov.png"/>
+        <look name="blueRovTexture" gray="1.0" roughness="0.5" texture="BlueROV/BlueRov.png"/>
     </looks>
+     <materials>
+        <material name="Dummy" density="1031.0" restitution="0.1"/>
+    </materials>
 
 
     <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
         <!-- robot definitions -->
-        <base_link name="vehicle" type="compound" physics="submerged">
+        <base_link name="vehicle" physics="submerged" type="compound">
             
-            <external_part name="vehicle" type="model" physics="submerged" buoyant="false">
+
+            <external_part name="vehicle" type="model" physics="submerged" buoyant="true">
+                
                 <physical>
-                    <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/>
-                    <!-- <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/> -->
+                    <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
                     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-                    <thickness value="0.005"/>
+                    <thickness value="0.01"/>
                 </physical>
                 <visual>
+                    <!-- <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/> -->
                     <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
                     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
                 </visual>
                 <material name="Dummy"/>
                 <look name="blueRovTexture"/>
                 <compound_transform rpy="0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+
+                <!-- Overwrite properties-->
+                <mass value="14.7"/>
+                <cg xyz="-0.03 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <inertia xyz="1.0 1.0 1.0"/>
+
             </external_part>
 
-            <internal_part name="volume" type="box" physics="submerged" buoyant="true">
-				<dimensions xyz="0.244966 0.244966 0.244966"/>
-				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-				<material name="Dummy"/>
-				<look name="None"/>
-				<mass value="0.025"/>
-				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-			</internal_part>
-            
         </base_link>
-
-        <mass value="14.7"/>
-        <inertia xyz="1.0 1.0 1.0"/>
-        <cg xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-
-
-
-
+        
         <world_transform xyz="$(arg position)" rpy="$(arg orientation)"/>
 
+
+        <!-- Sensors-->
+        <sensor name="FLS" type="fls">
+            <specs beams="512" bins="500" horizontal_fov="120.0" vertical_fov="30.0"/>
+            <settings range_min="0.5" range_max="10.0" gain="1.1"/>
+            <noise multiplicative="0.01" additive="0.02"/>
+            <display colormap="hot"/>
+            <origin xyz="0.147759 0.0 -0.225529" rpy="1.57079633 0.0 1.57079633"/>
+            <link name="vehicle"/>
+        </sensor>
+
+
+        <!-- Thrusters-->
+        <actuator name="Push" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <link name="vehicle"/>
+            <ros_publisher topic="/$(arg robot_name)/push"/>
+        </actuator>
+
+
+
+
+        <!-- Subscribe on thrusers -->
+        <ros_subscriber thrusters="/$(arg robot_name)/setpoint/pwm"/>
+
     </robot>
-
-
-
-
-
-
-
 </scenario>
