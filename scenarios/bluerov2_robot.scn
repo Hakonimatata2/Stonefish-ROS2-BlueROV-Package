@@ -5,7 +5,9 @@
     <looks>
         <look name="blueRovTexture" gray="1.0" roughness="0.5" texture="BlueROV/BlueRov.png"/>
     </looks>
-     <materials>
+
+    <!-- Materials-->
+    <materials>
         <material name="Dummy" density="1031.0" restitution="0.1"/>
     </materials>
 
@@ -13,10 +15,7 @@
     <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
         <!-- robot definitions -->
         <base_link name="vehicle" physics="submerged" type="compound">
-            
-
             <external_part name="vehicle" type="model" physics="submerged" buoyant="true">
-                
                 <physical>
                     <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
                     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
@@ -30,16 +29,12 @@
                 <material name="Dummy"/>
                 <look name="blueRovTexture"/>
                 <compound_transform rpy="0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-
                 <!-- Overwrite properties-->
                 <mass value="14.7"/>
                 <cg xyz="-0.03 0.0 0.0" rpy="0.0 0.0 0.0"/>
                 <inertia xyz="1.0 1.0 1.0"/>
-
             </external_part>
-
         </base_link>
-        
         <world_transform xyz="$(arg position)" rpy="$(arg orientation)"/>
 
 
@@ -55,18 +50,65 @@
 
 
         <!-- Thrusters-->
-        <actuator name="Push" type="push">
+
+        <actuator name="T1" type="push">
             <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.113 -0.1 -0.04" rpy="0.0 0.0 0.785398"/>
             <link name="vehicle"/>
-            <ros_publisher topic="/$(arg robot_name)/push"/>
+            <ros_subscriber topic="/thruster_setpoints/T1"/>
         </actuator>
 
+        <actuator name="T2" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="0.113 0.1 -0.04" rpy="0.0 0.0 -0.785398"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T2"/>
+        </actuator>
 
+        <actuator name="T3" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="-0.176 0.1 -0.04" rpy="0.0 0.0 0.785398"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T3"/>
+        </actuator>
 
+        <actuator name="T4" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="-0.176 -0.1 -0.04" rpy="0.0 0.0 -0.785398"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T4"/>
+        </actuator>
+
+        <actuator name="T5" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="0.095 0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T5"/>
+        </actuator>
+
+        <actuator name="T6" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="0.095 -0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T6"/>
+        </actuator>
+        
+       <actuator name="T7" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="-0.144 0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T7"/>
+        </actuator>
+
+        <actuator name="T8" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="-0.144 -0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T8"/>
+        </actuator>
 
         <!-- Subscribe on thrusers -->
-        <ros_subscriber thrusters="/$(arg robot_name)/setpoint/pwm"/>
+        <!-- <ros_subscriber thrusters="/thruster_setpoints"/> -->
 
     </robot>
 </scenario>
